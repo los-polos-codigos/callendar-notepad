@@ -6,17 +6,22 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
+    "@expo/webpack-config": "0.17.0",
     "@react-native-firebase/app": "^16.4.0",
     "@react-native-firebase/messaging": "^16.4.0",
     "axios": "^1.1.3",
     "expo": "~46.0.16",
     "expo-status-bar": "~1.4.0",
+    "expo-web-browser": "^11.0.0",
     "react": "18.0.0",
+    "react-dom": "18.0.0",
     "react-native": "0.69.6",
-    "react-native-i18n": "^2.0.15"
+    "react-native-i18n": "^2.0.15",
+    "react-native-web": "~0.18.7"
   },
   "devDependencies": {
     "cypress": "^10.11.0"
