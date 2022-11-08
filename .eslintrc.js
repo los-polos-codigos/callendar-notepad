@@ -11,5 +11,6 @@ module.exports = {
   plugins: ['react', 'react-native'],
   rules: {
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+    'linebreak-style': 0,
   },
 };
