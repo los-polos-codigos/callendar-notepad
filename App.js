@@ -1,7 +1,6 @@
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { mount } from 'cypress/react';
+import { StyleSheet, View } from 'react-native';
+import Index from './src/index';
 
 const styles = StyleSheet.create({
   container: {
@@ -15,8 +14,7 @@ const styles = StyleSheet.create({
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>App</Text>
-      <StatusBar />
+      <Index />
     </View>
   );
 }
