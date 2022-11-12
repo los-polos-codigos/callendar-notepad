@@ -1,7 +1,9 @@
 import React from 'react';
 
-import { Text } from 'components/Text/Text';
+import { LoginView } from './views/LoginView';
+import { Text } from 'react-native';
 
-const Index = () => <Text text="Hello world!" />;
+// const Index = () => <LoginView />;
+const Index = () => <Text>asdf</Text>;
 
 export default Index;
