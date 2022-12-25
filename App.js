@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Index from './src/index';
+import { PositionWrapper } from './src/layouts/positionWrapper/positionWrapper';
 
 const styles = StyleSheet.create({
   container: {
@@ -13,8 +15,12 @@ const styles = StyleSheet.create({
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Index />
-    </View>
+    <SafeAreaProvider>
+      <PositionWrapper>
+        <View style={styles.container}>
+          <Index />
+        </View>
+      </PositionWrapper>
+    </SafeAreaProvider>
   );
 }

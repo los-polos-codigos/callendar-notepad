@@ -14,6 +14,10 @@ module.exports = {
     'linebreak-style': 0,
     'react/function-component-definition': 0,
     'import/prefer-default-export': 0,
+    'implicit-arrow-linebreak': 0,
+    'react/jsx-one-expression-per-line': 0,
+    'object-curly-newline': 0,
+    'comma-dangle': 0,
   },
   settings: {
     react: {
