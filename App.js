@@ -1,26 +1,19 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+// eslint-disable-next-line import/no-unresolved
+import { REACT_APP_MOCKED } from '@env';
+import mocks from 'utils/mocks';
 import Index from './src/index';
 import { PositionWrapper } from './src/layouts/positionWrapper/positionWrapper';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    _backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+if (window.server) window.server.shutdown();
 
-export default function App() {
-  return (
-    <SafeAreaProvider>
-      <PositionWrapper>
-        <View style={styles.container}>
-          <Index />
-        </View>
-      </PositionWrapper>
-    </SafeAreaProvider>
-  );
-}
+if (REACT_APP_MOCKED) window.server = mocks;
+
+export default () => (
+  <SafeAreaProvider>
+    <PositionWrapper>
+      <Index />
+    </PositionWrapper>
+  </SafeAreaProvider>
+);

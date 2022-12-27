@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
   },
   insideWrapper: {
     height,
+    backgroundColor: theme.colors.white_100,
     ...theme.padding([28, 39, 60, 29]),
   },
   logoWrapper: {},
@@ -71,5 +72,9 @@ export const styles = StyleSheet.create({
     color: theme.colors.gray_80,
     alignSelf: 'flex-start',
     marginTop: 53,
+  },
+  lostFocusElement: {
+    opacity: 0,
+    position: 'absolute',
   },
 });
