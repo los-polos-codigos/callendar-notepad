@@ -8,4 +8,5 @@ const addBaseUrl = (url) => {
 
 export const endpoints = {
   AUTH_PHONE: addBaseUrl('/auth/phone'),
+  AUTH_CODE: addBaseUrl('/auth/code'),
 };

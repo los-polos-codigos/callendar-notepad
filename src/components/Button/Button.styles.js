@@ -6,6 +6,7 @@ export const styles = ({ type }) =>
     pressableButton: {
       width: '100%',
       height: 54,
+      maxHeight: '100%',
       borderRadius: 8,
       backgroundColor: type ? theme.colors.gray_20 : theme.colors.blue,
       display: 'flex',

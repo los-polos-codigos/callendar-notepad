@@ -15,7 +15,7 @@ const Index = () => {
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName={routes.LOGIN_PHONE_NUMBER}
+        // initialRouteName={routes.LOGIN_PHONE_NUMBER}
       >
         <Stack.Screen name={routes.LOGIN_PHONE_NUMBER} component={LoginPhoneView} />
         <Stack.Screen name={routes.LOGIN_CODE} component={LoginCodeView} />

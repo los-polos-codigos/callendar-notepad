@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
   insideWrapper: {
     height,
     backgroundColor: theme.colors.white_100,
-    ...theme.padding([28, 39, 60, 29]),
+    ...theme.padding([28, 39, 70, 39]),
   },
   logoWrapper: {},
   contentWrapper: {

@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Keyboard } from 'react-native';
 import { routes } from 'utils/routes';
+import { endpoints } from '../../api/endpoints';
 
+// TODO: wyrzucić to do osobnego pliku i dodać stan ERROR
 const statuses = {
   DEFAULT: 'default',
   LOADING: 'loading',
@@ -57,7 +59,7 @@ export const useLoginPhoneView = (navigation) => {
 
   const sendPhoneNumber = async () => {
     setStatus(statuses.LOADING);
-    const response = await fetch('/auth/phone', { method: 'post' });
+    const response = await fetch(endpoints.AUTH_PHONE, { method: 'post' });
 
     if (response.status === 200) {
       navigation.navigate(routes.LOGIN_CODE);

@@ -38,7 +38,7 @@ export const LoginPhoneView = ({ navigation }) => {
         <View style={styles.contentWrapper}>
           <Image source={Avatar} style={styles.image} resizeMode="contain" />
           {/* THIS ELEMENT HELP TO LOSE FOCUS AFTER HIDDEN KEYBOARD */}
-          <View style={styles.lostFocusElement}>
+          <View style={{ position: 'absolute', opacity: 0 }}>
             <Text>x</Text>
           </View>
           <Text style={styles.textContent} ref={buttonRef}>

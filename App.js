@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 // eslint-disable-next-line import/no-unresolved
 import { REACT_APP_MOCKED } from '@env';
-import mocks from 'utils/mocks';
+import mocks from './src/api/mocks';
 import Index from './src/index';
 import { PositionWrapper } from './src/layouts/positionWrapper/positionWrapper';
 
