@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Image, Text, TextInput, View } from 'react-native';
 import Logo from 'icons/small_logo_text.svg';
 import { Button } from 'components/Button/Button';
@@ -8,6 +8,7 @@ import theme from 'theme/theme';
 import PropTypes from 'prop-types';
 import { styles } from './LoginPhoneVIew.styles';
 import { useLoginPhoneView } from './useLoginPhoneView';
+import { request } from '../../api/api';
 
 const BlueText = ({ children }) => <Text style={styles.textBlue}>{children}</Text>;
 
@@ -25,6 +26,15 @@ export const LoginPhoneView = ({ navigation }) => {
     sendPhoneNumber,
     buttonRef,
   } = useLoginPhoneView(navigation);
+
+  const getRequest = async () => {
+    const res = await request('get', '/auth/testFail');
+    console.log(res);
+  };
+
+  useEffect(() => {
+    getRequest();
+  }, []);
 
   return (
     <KeyboardAwareScrollView
