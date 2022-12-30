@@ -1,24 +1,24 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Keyboard, Text, TextInput, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Logo from 'icons/small_logo_text.svg';
 import { Button } from 'components/Button/Button';
 import { useForm, Controller } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { authActions } from 'core/auth/reducers';
+import { endpoints } from 'api/endpoints';
+import { apiStatuses } from 'utils/constants';
+import { authStatuses } from 'hooks/useAuth';
+import { errorsActions } from 'core/errors/reducers';
 import { styles } from './LoginCodeView.styles';
-import { endpoints } from '../../api/endpoints';
-
-// TODO: wyrzucić to do osobnego pliku i dodać stan ERROR
-const statuses = {
-  DEFAULT: 'default',
-  LOADING: 'loading',
-  SUCCESS: 'success',
-};
 
 export const LoginCodeView = () => {
   const itemsRef = useRef([]);
   const [isFormValid, setIsFormValid] = useState(false);
 
-  const [status, setStatus] = useState(statuses.DEFAULT);
+  const dispatch = useDispatch();
+
+  const [status, setStatus] = useState(apiStatuses.DEFAULT);
 
   const {
     control,
@@ -51,18 +51,30 @@ export const LoginCodeView = () => {
       .map(([, v]) => v)
       .join('');
 
-    const response = await fetch(endpoints.AUTH_CODE, {
-      method: 'post',
-      body: {
-        // TODO: DODAĆ TUTAJ PRAISEWORTHY DANE Z POPRZEDNIEGO WIDOKU, MIEDZYWIDOKOWE SHEROWANIE DANYCH + Z TEGO
-        phone: '+48123123123',
-        code,
-      },
-    });
+    try {
+      const response = request('post', endpoints.AUTH_CODE, { phone: '+48123123123', code });
 
-    const responseData = await response.json();
+      // const response = await fetch(endpoints.AUTH_CODE, {
+      //   method: 'post',
+      //   body: {
+      //     // TODO: DODAĆ TUTAJ PRAISEWORTHY DANE Z POPRZEDNIEGO WIDOKU, MIEDZYWIDOKOWE SHEROWANIE DANYCH + Z TEGO
+      //     phone: '+48123123123',
+      //     code,
+      //     // TODO: dodać IMEI code
+      //   },
+      // });
 
-    console.log(responseData);
+      const responseData = await response.json();
+
+      console.log(responseData);
+
+      dispatch(authActions.loginSuccess(responseData));
+      setStatus(authStatuses.DEFAULT);
+    } catch {
+      console.log('error');
+      dispatch(errorsActions.show({ content: 'Wytąpił nieoczekiwany błąd' }));
+      setStatus(authStatuses.FAIL);
+    }
   };
 
   useEffect(() => {
@@ -100,6 +112,12 @@ export const LoginCodeView = () => {
     []
   );
 
+  const buttonStatus = useMemo(() => {
+    if (status === apiStatuses.LOADING) return 'loading';
+    if (!isFormValid) return 'disabled';
+    return undefined;
+  }, [isFormValid, status]);
+
   return (
     <KeyboardAwareScrollView
       style={styles.mainWrapper}
@@ -124,7 +142,7 @@ export const LoginCodeView = () => {
         </View>
         <Button
           text="Potwierdź"
-          type={isFormValid ? undefined : 'disabled'}
+          type={buttonStatus}
           onClick={() => isFormValid && handleSubmit(onSubmit)()}
         />
       </View>

@@ -8,6 +8,7 @@ export default {
     white_100: '#fff',
     blue: '#1C49BC',
     white_50: '#EDEDED',
+    red_70: '#D95050',
   },
   padding: ([top, right, bottom, left]) => ({
     paddingLeft: left,

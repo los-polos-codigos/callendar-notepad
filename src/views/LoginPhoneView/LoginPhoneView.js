@@ -6,6 +6,8 @@ import Avatar from 'utils/images/login_view_avatar.png';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import theme from 'theme/theme';
 import PropTypes from 'prop-types';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { countActions } from 'core/store';
 import { styles } from './LoginPhoneVIew.styles';
 import { useLoginPhoneView } from './useLoginPhoneView';
 import { request } from '../../api/api';
@@ -27,13 +29,20 @@ export const LoginPhoneView = ({ navigation }) => {
     buttonRef,
   } = useLoginPhoneView(navigation);
 
+  // const selector = useSelector((state) => state.count);
+  // const dispatch = useDispatch();
+
   const getRequest = async () => {
     const res = await request('get', '/auth/testFail');
     console.log(res);
   };
 
+  // console.log(selector);
+
   useEffect(() => {
     getRequest();
+
+    // dispatch(countActions.incremented());
   }, []);
 
   return (

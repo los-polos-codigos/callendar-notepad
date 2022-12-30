@@ -6,6 +6,7 @@ import {
   authRefreshToken,
   authTestFail,
   authTestPass,
+  tokenVerify,
 } from './auth';
 
 export default createServer({
@@ -16,5 +17,6 @@ export default createServer({
     authTestFail(this);
     authTestPass(this);
     authRefreshToken(this);
+    tokenVerify(this);
   },
 });

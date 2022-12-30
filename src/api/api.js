@@ -29,11 +29,22 @@ export const request = async (type = 'get', url, body, headers) => {
   const refreshToken = 'refresh-token';
 
   try {
+    console.log('1');
     const response = await baseRequest(type, fullUrl, headers, body, accessToken);
+
+    console.log('request!');
+    console.log(response.ok);
+
+    // if (!response.ok) throw new Error('');
+    //
+    // console.log('przechodzi tutaj');
 
     return response.data;
   } catch (err) {
-    if (err.response.status !== 403) return err;
+    if (err.response.status !== 403) {
+      console.log('tatauj bład');
+      throw Error(err);
+    }
 
     try {
       // TODO:  dodać w przyszłości z pliku URL - oraz dodać base
@@ -46,7 +57,7 @@ export const request = async (type = 'get', url, body, headers) => {
 
         return response2.data;
       } catch (errSecondRequest) {
-        return errSecondRequest;
+        throw Error(errSecondRequest);
       }
     } catch (errRefreshToken) {
       console.log(errRefreshToken);

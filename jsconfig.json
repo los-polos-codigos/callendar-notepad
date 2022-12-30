@@ -5,7 +5,12 @@
       "components/*": ["./src/components/*"],
       "utils/*": ["./src/utils/*"],
       "icons/*": ["./src/utils/icons/*"],
-      "theme/*": ["./src/theme/*"]
+      "theme/*": ["./src/theme/*"],
+      "api/*": ["./src/api/*"],
+      "layouts/*": ["./src/layouts/*"],
+      "core/*": ["./src/core/*"],
+      "views/*": ["./src/views/*"],
+      "hooks/*": ["./src/hooks/*"]
     }
   },
   "include": ["src"]

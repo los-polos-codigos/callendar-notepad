@@ -1,26 +1,42 @@
 import React from 'react';
-
 import { routes } from 'utils/routes';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { LoginPhoneView } from './views/LoginPhoneView';
-import { LoginCodeView } from './views/LoginCodeView';
+import { Home } from 'views/Home/Home';
+import { Loading } from 'views/Loading';
+import { LoginPhoneView } from 'views/LoginPhoneView';
+import { LoginCodeView } from 'views/LoginCodeView';
+import { ErrorToast } from 'components/ErrorToast/ErrorToast';
+import { useSelector } from 'react-redux';
+import { errorsSelector } from 'core/errors/selectors';
+import { authStatuses, useAuth } from './hooks/useAuth';
 
 const Index = () => {
   const Stack = createNativeStackNavigator();
 
+  const status = useAuth();
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-        // initialRouteName={routes.LOGIN_PHONE_NUMBER}
-      >
-        <Stack.Screen name={routes.LOGIN_PHONE_NUMBER} component={LoginPhoneView} />
-        <Stack.Screen name={routes.LOGIN_CODE} component={LoginCodeView} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <>
+      {status === authStatuses.LOADING && <Loading />}
+      <ErrorToast />
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          {status === authStatuses.AUTHORIZED ? (
+            <Stack.Screen name={routes.HOME} component={Home} />
+          ) : (
+            <>
+              <Stack.Screen name={routes.LOGIN_PHONE_NUMBER} component={LoginPhoneView} />
+              <Stack.Screen name={routes.LOGIN_CODE} component={LoginCodeView} />
+            </>
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
 };
 

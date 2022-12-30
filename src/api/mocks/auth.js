@@ -1,4 +1,5 @@
 import { Response } from 'miragejs';
+import { endpoints } from 'api/endpoints';
 
 // TODO: tutaj tez by się przydało brać endpointy z listy jak w reszcie miejsc
 export const authPhone = (base) =>
@@ -6,18 +7,18 @@ export const authPhone = (base) =>
 
 export const authCode = (base) =>
   base.post(
-    '/auth/code',
+    endpoints.AUTH_CODE,
     (req, res) => {
       console.log(res.requestBody);
       return new Response(
-        200,
+        500,
         {},
-        {
-          userId: 1234,
-          isUserAlreadyExist: true,
-          accessToken: 'access-token',
-          refreshToken: 'refresh-token',
-        }
+        // {
+        //   isUserAlreadyExist: true,
+        //   accessToken: 'access-token',
+        //   refreshToken: 'refresh-token',
+        // }
+        { errors: ['The database went on vacation'] }
       );
     },
     { timing: 500 }
@@ -40,6 +41,22 @@ export const authTest = (base) =>
       );
     },
     { timing: 500 }
+  );
+
+export const tokenVerify = (base) =>
+  base.get(
+    '/token/verify',
+    () =>
+      new Response(
+        200,
+        {},
+        {
+          userId: 1234,
+          isUserAlreadyExist: true,
+          accessToken: 'access-token',
+          refreshToken: 'refresh-token',
+        }
+      )
   );
 
 export const authTestFail = (base) =>
