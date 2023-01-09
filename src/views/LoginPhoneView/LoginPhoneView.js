@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Image, Text, TextInput, View } from 'react-native';
 import Logo from 'icons/small_logo_text.svg';
 import { Button } from 'components/Button/Button';
@@ -6,11 +6,8 @@ import Avatar from 'utils/images/login_view_avatar.png';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import theme from 'theme/theme';
 import PropTypes from 'prop-types';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { countActions } from 'core/store';
 import { styles } from './LoginPhoneVIew.styles';
 import { useLoginPhoneView } from './useLoginPhoneView';
-import { request } from '../../api/api';
 
 const BlueText = ({ children }) => <Text style={styles.textBlue}>{children}</Text>;
 
@@ -29,22 +26,6 @@ export const LoginPhoneView = ({ navigation }) => {
     buttonRef,
   } = useLoginPhoneView(navigation);
 
-  // const selector = useSelector((state) => state.count);
-  // const dispatch = useDispatch();
-
-  const getRequest = async () => {
-    const res = await request('get', '/auth/testFail');
-    console.log(res);
-  };
-
-  // console.log(selector);
-
-  useEffect(() => {
-    getRequest();
-
-    // dispatch(countActions.incremented());
-  }, []);
-
   return (
     <KeyboardAwareScrollView
       style={styles.mainWrapper}
@@ -56,10 +37,6 @@ export const LoginPhoneView = ({ navigation }) => {
         <Logo />
         <View style={styles.contentWrapper}>
           <Image source={Avatar} style={styles.image} resizeMode="contain" />
-          {/* THIS ELEMENT HELP TO LOSE FOCUS AFTER HIDDEN KEYBOARD */}
-          <View style={{ position: 'absolute', opacity: 0 }}>
-            <Text>x</Text>
-          </View>
           <Text style={styles.textContent} ref={buttonRef}>
             <BlueText>Przechowuj</BlueText>, <BlueText>planuj</BlueText> oraz{' '}
             <BlueText>zarządzaj</BlueText> {'\n'}

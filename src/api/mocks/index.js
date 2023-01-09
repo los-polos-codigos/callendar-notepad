@@ -1,4 +1,5 @@
 import { createServer } from 'miragejs';
+import { REACT_APP_MOCKED } from '@env';
 import {
   authPhone,
   authCode,
@@ -9,14 +10,19 @@ import {
   tokenVerify,
 } from './auth';
 
-export default createServer({
-  routes() {
-    authPhone(this);
-    authCode(this);
-    authTest(this);
-    authTestFail(this);
-    authTestPass(this);
-    authRefreshToken(this);
-    tokenVerify(this);
-  },
-});
+export default () => {
+  if (REACT_APP_MOCKED === 'true') {
+    return createServer({
+      routes() {
+        authPhone(this);
+        authCode(this);
+        authTest(this);
+        authTestFail(this);
+        authTestPass(this);
+        authRefreshToken(this);
+        tokenVerify(this);
+      },
+    });
+  }
+  return () => ({});
+};

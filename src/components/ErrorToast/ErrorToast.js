@@ -12,15 +12,12 @@ export const ErrorToast = () => {
   const error = useSelector(errorsSelector);
   const dispatch = useDispatch();
 
-  console.log(error);
-
   const insets = useSafeAreaInsets();
 
-  if (!error.isActive) return <></>;
+  if (!error.isActive) return null;
 
   return (
     <View style={{ ...styles.wrapper, top: 15 + insets.top }}>
-      {/* <Text>{error.content}</Text> */}
       <Text style={styles.text}>{error.content}</Text>
       <Pressable onPress={() => dispatch(errorsActions.hide())}>
         <CloseIcon />

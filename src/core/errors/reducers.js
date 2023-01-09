@@ -3,7 +3,6 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   isActive: false,
   content: '',
-  // content: 'Wystąpił nieoczekiwany błąd',
 };
 
 const errorsSlice = createSlice(
@@ -19,7 +18,7 @@ const errorsSlice = createSlice(
     },
   },
   {
-    key: '@persist/error',
+    key: 'persist/error',
   }
 );
 

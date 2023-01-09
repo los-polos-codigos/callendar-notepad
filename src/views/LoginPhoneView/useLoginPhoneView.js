@@ -1,26 +1,28 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Keyboard } from 'react-native';
 import { routes } from 'utils/routes';
-import { endpoints } from '../../api/endpoints';
-
-// TODO: wyrzucić to do osobnego pliku i dodać stan ERROR
-const statuses = {
-  DEFAULT: 'default',
-  LOADING: 'loading',
-  SUCCESS: 'success',
-};
+import { request } from 'api/api';
+import { useDispatch, useSelector } from 'react-redux';
+import { authSelector } from 'core/auth/selectors';
+import { errorsActions } from 'core/errors/reducers';
+import { apiStatuses } from 'utils/constants/apiStatuses';
+import { endpoints } from 'api/endpoints';
 
 export const useLoginPhoneView = (navigation) => {
   const buttonRef = useRef();
 
+  const dispatch = useDispatch();
+
+  const { deviceId } = useSelector(authSelector);
+
   const [phoneNumberValue, setPhoneNumberValue] = useState('');
   const [isInputFocused, setIsInputFocused] = useState(false);
-  const [status, setStatus] = useState(statuses.DEFAULT);
+  const [status, setStatus] = useState(apiStatuses.DEFAULT);
 
   const isPhoneNumberEntered = phoneNumberValue.length === 11;
 
   const buttonType = () => {
-    if (status === statuses.LOADING) return 'loading';
+    if (status === apiStatuses.LOADING) return 'loading';
     if (!isPhoneNumberEntered) return 'disabled';
   };
 
@@ -57,16 +59,34 @@ export const useLoginPhoneView = (navigation) => {
     [phoneNumberValue]
   );
 
-  const sendPhoneNumber = async () => {
-    setStatus(statuses.LOADING);
-    const response = await fetch(endpoints.AUTH_PHONE, { method: 'post' });
+  const sendPhoneNumber = useCallback(async () => {
+    try {
+      setStatus(apiStatuses.LOADING);
 
-    if (response.status === 200) {
-      navigation.navigate(routes.LOGIN_CODE);
-      setStatus(statuses.DEFAULT);
+      await request('post', endpoints.AUTH_PHONE, {
+        phone: `+48${phoneNumberValue.replace(/\s/g, '')}`,
+        deviceId,
+      });
+
+      navigation.navigate(routes.LOGIN_CODE, { phone: phoneNumberValue.replace(/\s/g, '') });
+      setStatus(apiStatuses.DEFAULT);
       setPhoneNumberValue('');
+    } catch (err) {
+      const leftTimeInSeconds = err?.response?.data?.timeLeft;
+
+      if (leftTimeInSeconds) {
+        const minutesLeft = Math.floor(leftTimeInSeconds / 60);
+        dispatch(
+          errorsActions.show({
+            content: `Za dużo nieudanych prób logowania, poczekaj: ${minutesLeft} min`,
+          })
+        );
+      } else {
+        dispatch(errorsActions.show({ content: 'Coś poszło nie tak!' }));
+      }
+      setStatus(apiStatuses.DEFAULT);
     }
-  };
+  }, [phoneNumberValue, deviceId]);
 
   return {
     phoneNumberValue,

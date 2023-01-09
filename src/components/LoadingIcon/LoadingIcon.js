@@ -4,7 +4,7 @@ import theme from 'theme/theme';
 import { styles } from 'components/LoadingIcon/LoadingIcon.styles';
 import { Animated, Easing, View } from 'react-native';
 
-export const LoadingIcon = ({ color, bgColor }) => {
+export const LoadingIcon = ({ color, bgColor, size }) => {
   const fadeAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export const LoadingIcon = ({ color, bgColor }) => {
     outputRange: ['0deg', '360deg'],
   });
 
-  const stylesModified = styles({ rotateAnimation: spin, color, bgColor });
+  const stylesModified = styles({ rotateAnimation: spin, color, bgColor, size });
 
   return (
     <Animated.View style={stylesModified.mainWrapper}>
@@ -36,9 +36,11 @@ export const LoadingIcon = ({ color, bgColor }) => {
 LoadingIcon.propTypes = {
   color: PropsType.string,
   bgColor: PropsType.string,
+  size: PropsType.number,
 };
 
 LoadingIcon.defaultProps = {
   color: theme.colors.black_100,
   bgColor: theme.colors.white_100,
+  size: 20,
 };

@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native';
 
-export const styles = ({ bgColor, color, rotateAnimation }) =>
+export const styles = ({ bgColor, color, rotateAnimation, size }) =>
   StyleSheet.create({
     mainWrapper: {
-      width: 20,
-      height: 20,
+      width: size,
+      height: size,
       borderRadius: 1000,
       backgroundColor: color,
       display: 'flex',

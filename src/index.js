@@ -7,12 +7,13 @@ import { Loading } from 'views/Loading';
 import { LoginPhoneView } from 'views/LoginPhoneView';
 import { LoginCodeView } from 'views/LoginCodeView';
 import { ErrorToast } from 'components/ErrorToast/ErrorToast';
-import { useSelector } from 'react-redux';
-import { errorsSelector } from 'core/errors/selectors';
+import { useDeviceId } from 'hooks/useDeviceId';
 import { authStatuses, useAuth } from './hooks/useAuth';
 
 const Index = () => {
   const Stack = createNativeStackNavigator();
+
+  useDeviceId();
 
   const status = useAuth();
 

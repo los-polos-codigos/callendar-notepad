@@ -21,6 +21,7 @@ export const styles = StyleSheet.create({
   text: {
     color: theme.colors.white_100,
     fontWeight: '500',
+    maxWidth: '90%',
     fontSize: 20,
   },
 });

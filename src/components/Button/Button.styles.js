@@ -1,17 +1,18 @@
 import { StyleSheet } from 'react-native';
 import theme from 'theme/theme';
 
-export const styles = ({ type }) =>
+export const styles = ({ type, size }) =>
   StyleSheet.create({
     pressableButton: {
       width: '100%',
-      height: 54,
+      height: size === 'small' ? 34 : 54,
       maxHeight: '100%',
       borderRadius: 8,
       backgroundColor: type ? theme.colors.gray_20 : theme.colors.blue,
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'center',
+      paddingLeft: size === 'small' ? 16 : 0,
+      justifyContent: size === 'small' ? 'flex-start' : 'center',
       flexDirection: 'row',
     },
     textButton: {

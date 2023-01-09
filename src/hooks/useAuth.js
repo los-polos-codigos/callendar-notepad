@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { authSelector } from 'core/auth/selectors';
 import { request } from 'api/api';
@@ -17,7 +17,7 @@ export const useAuth = () => {
 
   const checkToken = async () => {
     try {
-      await request('get', endpoints.TOKEN_VERIFY);
+      await request('post', endpoints.TOKEN_VERIFY);
       setStatus(authStatuses.AUTHORIZED);
     } catch {
       setStatus(authStatuses.FAIL);

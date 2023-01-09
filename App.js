@@ -11,9 +11,11 @@ import { store, persist } from './src/core/store';
 import mocks from './src/api/mocks';
 import Index from './src/index';
 
-if (window.server) window.server.shutdown();
-
-if (REACT_APP_MOCKED) window.server = mocks;
+if (window.server) {
+  window.server.shutdown();
+  window.server = undefined;
+}
+if (REACT_APP_MOCKED === 'true') window.server = mocks();
 
 export default () => (
   <Provider store={store}>
