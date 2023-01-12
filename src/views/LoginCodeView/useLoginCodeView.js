@@ -10,8 +10,9 @@ import { authActions } from 'core/auth/reducers';
 import { authStatuses } from 'hooks/useAuth';
 import { errorsActions } from 'core/errors/reducers';
 import { styles } from 'views/LoginCodeView/LoginCodeView.styles';
+import { routes } from 'utils/routes';
 
-export const useLoginCodeView = (phone) => {
+export const useLoginCodeView = (phone, navigation) => {
   const itemsRef = useRef([]);
   const [isFormValid, setIsFormValid] = useState(false);
 
@@ -61,7 +62,13 @@ export const useLoginCodeView = (phone) => {
       dispatch(authActions.loginSuccess(responseData));
       setStatus(authStatuses.DEFAULT);
     } catch (err) {
-      dispatch(errorsActions.show({ content: 'Wytąpił nieoczekiwany błąd' }));
+      console.log(err?.response?.status);
+      if (err?.response?.status === 429) {
+        dispatch(errorsActions.show({ content: 'Za duża ilość prób!' }));
+        navigation.navigate(routes.LOGIN_PHONE_NUMBER);
+      } else {
+        dispatch(errorsActions.show({ content: 'Błędny kod!' }));
+      }
       setStatus(authStatuses.DEFAULT);
     }
   };

@@ -9,11 +9,11 @@ import PropsType from 'prop-types';
 import { useLoginCodeView } from 'views/LoginCodeView/useLoginCodeView';
 import { styles } from './LoginCodeView.styles';
 
-export const LoginCodeView = ({ route }) => {
+export const LoginCodeView = ({ navigation, route }) => {
   const { phone } = route.params;
 
   const { itemsRef, resendSms, buttonStatus, isFormValid, handleSubmit, onSubmit, CustomInput } =
-    useLoginCodeView(phone);
+    useLoginCodeView(phone, navigation);
 
   return (
     <KeyboardAwareScrollView
@@ -47,4 +47,5 @@ export const LoginCodeView = ({ route }) => {
 
 LoginCodeView.propTypes = {
   route: PropsType.any.isRequired,
+  navigation: PropsType.any.isRequired,
 };
