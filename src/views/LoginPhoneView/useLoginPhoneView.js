@@ -68,7 +68,9 @@ export const useLoginPhoneView = (navigation) => {
         deviceId,
       });
 
-      navigation.navigate(routes.LOGIN_CODE, { phone: phoneNumberValue.replace(/\s/g, '') });
+      navigation.navigate(routes.LOGIN_CODE, {
+        phone: `+48${phoneNumberValue.replace(/\s/g, '')}`,
+      });
       setStatus(apiStatuses.DEFAULT);
       setPhoneNumberValue('');
     } catch (err) {

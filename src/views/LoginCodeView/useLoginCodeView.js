@@ -62,7 +62,6 @@ export const useLoginCodeView = (phone, navigation) => {
       dispatch(authActions.loginSuccess(responseData));
       setStatus(authStatuses.DEFAULT);
     } catch (err) {
-      console.log(err?.response?.status);
       if (err?.response?.status === 429) {
         dispatch(errorsActions.show({ content: 'Za duża ilość prób!' }));
         navigation.navigate(routes.LOGIN_PHONE_NUMBER);
