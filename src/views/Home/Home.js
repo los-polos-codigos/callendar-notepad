@@ -10,7 +10,6 @@ export const Home = () => {
   return (
     <View>
       <Text style={{ fontSize: 40 }}>HOME</Text>
-
       <Button text="logout" onClick={() => dispatch(authActions.logout())} />
     </View>
   );

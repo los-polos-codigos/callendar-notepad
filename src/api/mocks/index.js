@@ -1,14 +1,7 @@
 import { createServer } from 'miragejs';
+// eslint-disable-next-line import/no-unresolved
 import { REACT_APP_MOCKED } from '@env';
-import {
-  authPhone,
-  authCode,
-  authTest,
-  authRefreshToken,
-  authTestFail,
-  authTestPass,
-  tokenVerify,
-} from './auth';
+import { authPhone, authCode, tokenVerify } from './auth';
 
 export default () => {
   if (REACT_APP_MOCKED === 'true') {
@@ -16,10 +9,6 @@ export default () => {
       routes() {
         authPhone(this);
         authCode(this);
-        authTest(this);
-        authTestFail(this);
-        authTestPass(this);
-        authRefreshToken(this);
         tokenVerify(this);
       },
     });

@@ -24,7 +24,6 @@ export const request = async (type = 'get', url, body, headers) => {
 
   try {
     const response = await baseRequest(type, fullUrl, headers, body, accessToken);
-
     return response.data;
   } catch (err) {
     if (err.response.status !== 403) throw err;
@@ -40,7 +39,6 @@ export const request = async (type = 'get', url, body, headers) => {
       store.dispatch(authActions.setNewTokens({ ...responseRefresh.data }));
 
       const response2 = await baseRequest(type, fullUrl, headers, body, accessToken);
-
       return response2.data;
     } catch (errRefreshToken) {
       store.dispatch(authActions.logout());
