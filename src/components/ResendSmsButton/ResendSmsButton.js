@@ -4,7 +4,7 @@ import { Button } from 'components/Button/Button';
 import PropsType from 'prop-types';
 
 export const ResendSmsButton = ({ onClick }) => {
-  const DEFAULT_TIME_RESEND_SMS = 5;
+  const DEFAULT_TIME_RESEND_SMS = 60;
 
   const [timeLeftToResendSms, setTimeLeftToResendSms] = useState(DEFAULT_TIME_RESEND_SMS);
   const [buttonStatus, setButtonStatus] = useState('disabled');
