@@ -26,7 +26,6 @@ export const useLoginCodeView = (phone, navigation) => {
     control,
     handleSubmit,
     formState: { isValid },
-    watch,
   } = useForm({
     defaultValues: {
       'code-0': '',
@@ -36,18 +35,6 @@ export const useLoginCodeView = (phone, navigation) => {
     },
   });
 
-  useEffect(() => {
-    watch((data, { name }) => {
-      const [, code] = name.split('-');
-      if (data[name] !== '' && +code === 3) Keyboard.dismiss();
-      else if (data[name] !== '') {
-        setTimeout(() => {
-          itemsRef.current[+code + 1].focus();
-        });
-      }
-    });
-  }, []);
-
   const onSubmit = async (data) => {
     const code = Object.entries(data)
       .map(([, v]) => v)
@@ -55,7 +42,7 @@ export const useLoginCodeView = (phone, navigation) => {
 
     try {
       const responseData = await request('post', endpoints.AUTH_CODE, {
-        phone: `+48${phone}`,
+        phone: `${phone}`,
         code,
         deviceId,
       });
@@ -93,12 +80,18 @@ export const useLoginCodeView = (phone, navigation) => {
               maxLength={1}
               keyboardType="numeric"
               style={styles.smsCodeInput(isFocused)}
-              onFocus={() => setIsFocused(true)}
+              onFocus={() => {
+                setIsFocused(true);
+              }}
               onBlur={(event) => {
                 onBlur(event);
                 setIsFocused(false);
               }}
-              onChangeText={onChange}
+              onChangeText={(text) => {
+                if (text !== '' && index !== 3) itemsRef.current[index + 1].focus();
+                if (text !== '' && index === 3) Keyboard.dismiss();
+                onChange(text);
+              }}
               value={value}
             />
           )}
