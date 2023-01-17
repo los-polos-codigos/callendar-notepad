@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, TextInput, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Logo from 'icons/small_logo_text.svg';
 import { Button } from 'components/Button/Button';
@@ -7,12 +7,13 @@ import { Button } from 'components/Button/Button';
 import { ResendSmsButton } from 'components/ResendSmsButton/ResendSmsButton';
 import PropsType from 'prop-types';
 import { useLoginCodeView } from 'views/LoginCodeView/useLoginCodeView';
+import theme from 'theme/theme';
 import { styles } from './LoginCodeView.styles';
 
 export const LoginCodeView = ({ navigation, route }) => {
   const { phone } = route.params;
 
-  const { itemsRef, resendSms, buttonStatus, isFormValid, handleSubmit, onSubmit, CustomInput } =
+  const { resendSms, buttonStatus, onSubmit, code, setCode, isInputFocused, setIsInputFocused } =
     useLoginCodeView(phone, navigation);
 
   return (
@@ -28,17 +29,22 @@ export const LoginCodeView = ({ navigation, route }) => {
           <Text style={styles.smsCodeTextBellow}>
             Wysłaliśmy do ciebie sms-a z kodem weryfikacyjnym
           </Text>
-          <View style={styles.smsCodeInputWrapper}>
-            {[0, 1, 2, 3].map((e, index) => (
-              <CustomInput key={e} index={index} ref={itemsRef} />
-            ))}
-          </View>
+          <TextInput
+            style={styles.inputCode(isInputFocused)}
+            placeholderTextColor={theme.colors.gray_30}
+            placeholder="0000"
+            maxLength={4}
+            onChangeText={setCode}
+            value={code}
+            onFocus={() => setIsInputFocused(true)}
+            onBlur={() => setIsInputFocused(false)}
+          />
           <ResendSmsButton onClick={resendSms} />
         </View>
         <Button
           text="Potwierdź"
           type={buttonStatus}
-          onClick={() => isFormValid && handleSubmit(onSubmit)()}
+          onClick={() => code.length === 4 && onSubmit()}
         />
       </View>
     </KeyboardAwareScrollView>

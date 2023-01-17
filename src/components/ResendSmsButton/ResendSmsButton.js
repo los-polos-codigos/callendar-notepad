@@ -34,7 +34,7 @@ export const ResendSmsButton = ({ onClick }) => {
   }, []);
 
   return (
-    <View style={{ marginTop: 47 }}>
+    <View style={{ marginTop: 76 }}>
       <Button
         text={`Wyślij ponowanie kod ${
           timeLeftToResendSms !== 0 ? `( ${timeLeftToResendSms}s )` : ''
